@@ -65,13 +65,14 @@ pickle.dump(statistic_dict, open('WordData/LTPEntropy/statistic_dict.pkl', 'wb')
 
 # calculate entropy, sort by occurence
 occur_word_list = [(word, word_dict[word], -np.log(word_dict[word] / total_word_num)) for word in word_dict]
-occur_word_list = sorted(occur_word_list, key = lambda x: x[1], reverse = True)
+sorted_word_list = sorted(occur_word_list, key = lambda x: x[1], reverse = True)
 # save entropy
 word_entropy_dict = {}
 for word, occur, entropy in occur_word_list:
     word_entropy_dict[word] = entropy
 
 # dump result
+json.dump(sorted_word_list, open('WordData/LTPEntropy/sorted_word_list.json', 'w'), ensure_ascii = False)
 json.dump(word_entropy_dict, open('WordData/LTPEntropy/word_entropy_dict.json', 'w'), ensure_ascii = False)
 import pickle
 pickle.dump(occur_word_list, open('WordData/LTPEntropy/occur_word_list.pkl', 'wb'))
