@@ -65,6 +65,16 @@ pickle.dump(statistic_dict, open('WordData/JiebaEntropy/statistic_dict.pkl', 'wb
 occur_word_list = [(word, word_dict[word], -np.log(word_dict[word] / total_word_num)) for word in word_dict]
 sorted_word_list = sorted(occur_word_list, key = lambda x: x[1], reverse = True)
 print('Most occur words: ', occur_word_list[:10])
+
+import numpy as np
+# sum word occur number
+total_word_occur_num = sum([x[1] for x in sorted_word_list])
+# word entropy: -log(p) = -log(occur_num / total_word_occur_num)
+word_entropy_dict = {x[0]: np.log2(x[1] / total_word_occur_num) for x in sorted_word_list}
+# add special token
+word_entropy_dict['<pad>'] = -22
+word_entropy_dict['<unk>'] = -22
+
 # save entropy
 word_entropy_dict = {}
 for word, occur, entropy in occur_word_list:
@@ -73,9 +83,6 @@ for word, occur, entropy in occur_word_list:
 # dump result
 json.dump(word_entropy_dict, open('WordData/JiebaEntropy/word_entropy_dict.json', 'w'), ensure_ascii = False)
 json.dump(sorted_word_list, open('WordData/JiebaEntropy/sorted_word_list.json', 'w'), ensure_ascii = False)
-import pickle
-pickle.dump(occur_word_list, open('WordData/JiebaEntropy/occur_word_list.pkl', 'wb'))
-pickle.dump(word_entropy_dict, open('WordData/JiebaEntropy/word_entropy_dict.pkl', 'wb'))
 
 # load datas
 # import pickle
