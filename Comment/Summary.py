@@ -106,11 +106,11 @@ cleaned_human_list = []
 comment_set = set()
 for item in enhanced_human_comment_list:
     comment = item['comment']
-    if comment not in comment_set:
+    if 'rewrite_model' in item and comment not in comment_set:
         cleaned_human_list.append(item)
         comment_set.add(comment)
 print(len(cleaned_human_list))
-json.dump(cleaned_human_list, open('ExampleData/Comment/enhanced_human_comment_list.json', 'w'), ensure_ascii = False, indent = 2)
+json.dump(cleaned_human_list, open('ExampleData/Comment/GPTEnhanced/enhanced_human_comment_list.json', 'w'), ensure_ascii = False, indent = 2)
 
 # load old
 # enhanced_GPT_comment_list = []
